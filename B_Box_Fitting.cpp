@@ -31,32 +31,40 @@ ll gcdll(ll a, ll b) { return b == 0 ? a : gcdll(b, a % b); }
 ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
 
 void solve() {
-   ll n;
-   cin>>n;
-   vector<ll> b(n),a(n);
-   range(i,0,n) cin>>b[i];
-   //bi - b(i-1) =i-p 
-   ll bprev=0;
-   ll cnt=n;
-   range(i,0,n){
-    ll diff=b[i]-bprev;
-    ll idx = i+1 - diff;
-    if(idx ==0) {
-        a[i]=cnt;
-        cnt--;
-    }
-    else{
-      ll j=idx -1;
-      a[i]=a[j];
-    }
-    bprev=b[i];
-   }
-   for(ll i=0;i<n;i++){
-    cout<<a[i]<<" ";
-   }
-   cout<<endl;
-}
+   ll n,box_width,w;
+   cin>>n>>box_width;
+   vector<ll> cnt(20);
 
+   for(ll i=0;i<n;i++){
+    cin>>w;
+    cnt[log2(w)]++;
+   }
+   ll height=1,space_left=box_width;
+
+   range(iter,0,n){
+    ll largest=-1;
+    for(ll size=19;size>=0 ; size--){
+        if(cnt[size] and (1<<size)<=space_left){
+            largest= size;
+            break;
+        }
+    }
+    if(largest==-1){
+        space_left=box_width;
+        height++;
+        for(ll size=19; size>=0;size--){
+            if(cnt[size] and (1<<size) <=space_left){
+                largest=size;
+                break;
+            }
+        }
+    }
+    cnt[largest]-=1;
+    space_left-=1<<largest;
+
+   }
+   cout<< height<<endl;
+}
 
 int main()
 {
