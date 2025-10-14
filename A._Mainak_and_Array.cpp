@@ -29,67 +29,18 @@ bool isPrime(ll n)
 
 ll gcdll(ll a, ll b) { return b == 0 ? a : gcdll(b, a % b); }
 ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
-string binary(long long x)
-{
-    string ans="";
-    while (x>0)
-    {
-        if (x%2==1) {ans+='1';}
-        else {ans+='0';};
-        x/=2;
-    };
-    return ans;
-}
- 
-bool check(string s)
-{
-    long long n=s.size(), i;
-    if (n%2==1 && s[n/2]=='1') {return false;};
-    for (i=0; i<n-1-i; i++)
-    {
-        if (s[i]!=s[n-1-i]) {return false;};
-    };
-    return true;
-}
 
 void solve() {
    ll n;
    cin>>n;
-   if(n==0) {
-    cout<<"YES"<<endl;
-    return ;
-   }
-//    if(n%2 ==0) {
-//       
-//     if(check(ans)){
-//         cout<<"YES";
+   ll arr[n];
+   ll ans=-1e7;
+   range(i,0,n) cin>>arr[i];
+   range(i,0,n) ans=max(ans,arr[(i-1+n)%n] -arr[i]);
 
-//     }
-//     else{
-//         cout<<"NO";
-//     }
-
-//    }
-//     else {
-//       string ans=binary(n);
-//     if(check(ans)){
-//         cout<<"YES";
-
-//     }
-//     else{
-//         cout<<"NO";
-//     }
-
-//    }
-   ll i =0;
-   string s=binary(n);
-//    cout<<s<<" ";
-   while(i<n && s[i]=='0') i++;
-   while(i--) s+='0';
-//    cout<<s<<endl;
-   if(check(s)) cout<<"YES";
-   else cout<<"NO";
-   cout<<endl;
+   range(i,1,n) ans=max(ans,arr[i]-arr[0]);
+   range(i,0,n-1) ans=max(ans,arr[n-1]-arr[i]);
+   cout<<ans<<endl; 
 }
 
 int main()
