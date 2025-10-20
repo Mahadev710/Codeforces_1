@@ -55,13 +55,16 @@ void solve() {
         else vis[x]=1;
     }
    }
-   if(flag){
-    puts("0");
-    for(ll i=1;i<=n;i++){
-        for(ll x:d[arr[i].se]) vis[x]=0;
+    if (flag) {
+        cout << 0 << "\n";
+        for (ll i = 1; i <= n; i++) {
+            for (ll x : d[arr[i].se]) {
+                vis[x] = 0;
+            }
+        }
         return;
     }
-   }
+
    ll ans=arr[1].fi+arr[2].fi;
    
    for(ll i=1;i<=n;i++){
