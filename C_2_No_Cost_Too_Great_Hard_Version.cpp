@@ -12,8 +12,16 @@ using namespace std;
     ios::sync_with_stdio(false); \
     cin.tie(nullptr)
 using ll = long long;
+#define fi first
+#define se second
+#define N 200005
 #define range(i, a, b) for (auto i = (a); i < (b); ++i)
 #define derange(i, a, b) for (auto i = (a); i >= (b); --i)
+
+pair<ll,ll> arr[N];
+const ll M=200001;
+vector<ll> d[N];
+ll vis[N];
 
 bool isPrime(ll n)
 {
@@ -30,44 +38,44 @@ bool isPrime(ll n)
 ll gcdll(ll a, ll b) { return b == 0 ? a : gcdll(b, a % b); }
 ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
 
-vector<vector<ll>> pf(200005);
-
-
-
 bool isPowerofTwo(ll n){
     return (n>0) && ((n&(n-1))==0);
 }
 
-void solve(){
-    ll n,b;
-    cin>>n;
-    vector<ll>arr(n);
-    for(ll i=0;i<n;i++) cin>>arr[i];
-    for(ll i=0;i<n;i++) cin>>b;
-    map<ll,ll> mp1,mp2;
-    ll op=2;
-    for(ll i=0;i<n;i++){
-        for(ll x:pf[arr[i]]){
-            mp1[x]++;
-            if(mp1[x]>1) {
-                op=0;
-                cout<<op<<endl;
-                return;
-            }
-        }
+void solve() {
+   ll n;
+   cin>>n;
+   for(ll i=1;i<=n;i++) cin>>arr[i].se;
+   for(ll i=1;i<=n;i++) cin>>arr[i].fi;
+   sort(arr+1,arr+n+1);
+   ll flag=0;
+   for(ll i=1;i<=n;i++){
+    for(ll x:d[arr[i].se]){
+        if(vis[x]) flag=1;
+        else vis[x]=1;
     }
+   }
+   if(flag){
+    puts("0");
+    for(ll i=1;i<=n;i++){
+        for(ll x:d[arr[i].se]) vis[x]=0;
+        return;
+    }
+   }
+   ll ans=arr[1].fi+arr[2].fi;
+   
+   for(ll i=1;i<=n;i++){
+    if(i!=1){
+        for(ll x:d[arr[i].se]) ans=min(ans,(x-arr[1].se%x)*arr[1].fi);
 
-    for(ll i=0;i<n;i++){
-        for(ll x:pf[arr[i]+1]){
-            mp2[x]++;
-            if(mp1[x] and mp2[x]){
-                op=1;
-                cout<<op<<endl;
-                return;
-            }
-        }
     }
-    cout<<op<<endl;
+    for(ll x: d[arr[i].se+1]) if(vis[x]) ans=min(ans,arr[i].fi );
+   }
+   cout<<ans<<endl;
+   for(ll i=1;i<=n;i++)
+      for(ll x:d[arr[i].se]) vis[x]=0;
+
+
 }
 
 int main()
@@ -76,12 +84,11 @@ int main()
     int t = 1;
     if (!(cin >> t))
         return 0;
-    for(int i=2;i<=200003;i++){
-        if(pf[i].size()) continue;
-        pf[i].push_back(i);
-        for(int j=i*2;j<=200003;j+=i) pf[j].push_back(i);
-    }
 
+    for(ll i=2;i<=M;i++){
+        if(d[i].size()) continue;
+        for(ll j=i;j<=M;j+=i) d[j].push_back(i);
+    }    
     while (t--)
         solve();
     return 0;

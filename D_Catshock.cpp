@@ -49,9 +49,42 @@ bool find_path(ll u,ll p,ll n){
     }
     return false;
 }
+
+void dfs(ll u,ll v,ll n){
+    if(u==n) return;
+    vector<ll> nodes;
+    ll path_child=0;
+    for(ll v: adj[u]){
+        if(v==p) continue;
+        
+    }
+}
  
 void solve() {
-   
+   ll n;
+   cin>>n;
+   adj.assign(n+1,vector<int>());
+   on_path.clear();
+   parent.assign(n+1,0);
+
+   commands.clear();
+   for(ll i=0;i<n-1;i++){
+    ll u,v;
+    cin>>u>>v;
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+   }
+   find_path(1,0,n);
+   ll curr=n;
+   while(curr !=0){
+    on_path.insert(curr);
+    curr =parent[curr];
+   }
+   dfs(1,0,n);
+   cout<<commands.size()<<endl;
+   for(auto cmd: commands){
+    cout<<cmd<<endl;
+   }
 }
 
 int main()
