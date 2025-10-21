@@ -34,57 +34,40 @@ bool isPowerofTwo(ll n){
     return (n>0) && ((n&(n-1))==0);
 }
 
-vector<vector<ll>> adj;
-set<ll> path;
-vector<ll> parent;
-vector<string>commands;
-
-bool find_path(ll u,ll p,ll n){
-    parent[u]=p;
-    if(u==n) return true;
-    for(ll v : adj[u]){
-        if(v!=p) {
-            if(find_path(v,u,n)) return true;
-        }
-    }
-    return false;
-}
-
-void dfs(ll u,ll v,ll n){
-    if(u==n) return;
-    vector<ll> nodes;
-    ll path_child=0;
-    for(ll v: adj[u]){
-        if(v==p) continue;
-        
-    }
-}
- 
 void solve() {
    ll n;
    cin>>n;
-   adj.assign(n+1,vector<int>());
-   on_path.clear();
-   parent.assign(n+1,0);
-
-   commands.clear();
+   vector<vector<ll>> g(n);
    for(ll i=0;i<n-1;i++){
     ll u,v;
     cin>>u>>v;
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+    u--;
+    v--;
+    g[u].push_back(v);
+    g[v].push_back(u);
    }
-   find_path(1,0,n);
-   ll curr=n;
-   while(curr !=0){
-    on_path.insert(curr);
-    curr =parent[curr];
-   }
-   dfs(1,0,n);
-   cout<<commands.size()<<endl;
-   for(auto cmd: commands){
-    cout<<cmd<<endl;
-   }
+   vector<ll> dep(n),par(n),ch(n);
+   
+   auto dfs= [&] (auto self , ll c, ll p)-> void {
+    if(p!=-1) dep[c]=dep[p]+1;
+    par[c]=p;
+
+    for(ll x:g[c]){
+        if(x==p) continue;
+          self(self, x, c);
+            ch[c]++;
+    }
+   };
+    dfs(dfs, n - 1, -1);
+
+    array<vector<int>,2> leaves;
+    leaves[0];
+
+    for(ll i=0;i<n;i++){
+        if(ch[i]==0)
+        leaves[dep[i] & 1] .push_back(i);
+    }
+
 }
 
 int main()

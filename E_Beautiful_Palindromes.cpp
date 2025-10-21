@@ -36,8 +36,34 @@ bool isPowerofTwo(ll n){
 
 void solve() {
    ll n,k;
-   vector<ll> arr(n);
-   range(i,0,n) cin>>arr[i];
+   cin>>n>>k;
+   vector<ll> arr(n),cnt(n+1,0);
+   range(i,0,n) cin>>arr[i],cnt[arr[i]]++;
+
+   ll x=-1;
+   for(ll i=1;i<=n;i++) if(cnt[i]==0){
+    x=i;
+    break;
+   }
+
+   if(x==-1){
+    for(ll i=0;i<k;i++) cout<<arr[n-3 + i%3]<<" ";
+    cout<<endl;
+   }
+   
+   else{
+    ll y=-1;
+    for(ll i=1;i<=n;i++) 
+    if(i!=x && i!=arr[n-1]){
+        y=i;
+        break;
+    }
+    vector<ll> v ={x,y,arr[n-1]};
+    for(ll i=0;i<k;i++) cout<<v[i%3]<<" ";
+    cout<<endl;
+   }
+   
+
    
 }
 
