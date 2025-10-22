@@ -40,7 +40,17 @@ void solve() {
    ll m=n*k;
    vector<ll> arr(n*k);
    range(i,0,m) cin>>arr[i];
-    
+   ll dis=n/2,ans=0;
+   for(ll i=0;i<k;i++){
+    for(ll j=0;j<dis;j++){
+        arr.pop_back();
+    }
+    ans+=arr.back();
+    arr.pop_back();
+
+   }
+   
+    cout<<ans<<endl;
 }
 
 int main()
