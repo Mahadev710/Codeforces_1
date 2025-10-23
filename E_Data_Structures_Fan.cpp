@@ -35,27 +35,42 @@ bool isPowerofTwo(ll n){
 }
 
 void solve() {
-   ll len,val;
-   cin>>len>>val;
-   vector<ll> ans(len,val);
-   ll or_val=0;
-   bool flag=true;
-   for(ll i=0;i<len-1;i++){
-    if(((or_val | i)& val)==(or_val | i)){
-        or_val|=i;
-        ans[i]=i;
-    }else{
-        flag=false;
-        break;
+   ll n;
+   cin>>n;
+   vector<ll> arr(n+1);
+   for(ll i=1;i<=n;i++){
+    cin>>arr[i];
+   }
+   string s;
+   cin>>s;
+   s="0"+s;
+   ll q;
+   cin>>q;
+   vector<ll> ans(2,0),pref(n+1,0);
+
+   for(ll i=1;i<=n;i++) {
+   ans[s[i]-'0'] ^=arr[i];
+   pref[i] =pref[i-1]^arr[i];
+   }
+   ll xori=0;
+   while(q--){
+    ll x;
+    cin>>x;
+    if(x==1){
+        ll l,r;
+
+        cin>>l>>r;
+        xori^=(pref[r]^pref[l-1]);
+    }
+    else{
+        int g;
+        cin>>g;
+        cout<<(xori^ans[g])<<" ";
     }
    }
-   if(flag && (or_val | (len-1)) ==val){
-    ans[len-1] =len-1;
-   }
-   for(auto it:ans) cout<<it<<" ";
    cout<<endl;
-}
 
+}
 
 int main()
 {

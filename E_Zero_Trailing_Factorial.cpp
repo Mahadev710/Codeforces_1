@@ -30,32 +30,9 @@ bool isPrime(ll n)
 ll gcdll(ll a, ll b) { return b == 0 ? a : gcdll(b, a % b); }
 ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
 
-bool isPowerofTwo(ll n){
-    return (n>0) && ((n&(n-1))==0);
-}
-
 void solve() {
-   ll len,val;
-   cin>>len>>val;
-   vector<ll> ans(len,val);
-   ll or_val=0;
-   bool flag=true;
-   for(ll i=0;i<len-1;i++){
-    if(((or_val | i)& val)==(or_val | i)){
-        or_val|=i;
-        ans[i]=i;
-    }else{
-        flag=false;
-        break;
-    }
-   }
-   if(flag && (or_val | (len-1)) ==val){
-    ans[len-1] =len-1;
-   }
-   for(auto it:ans) cout<<it<<" ";
-   cout<<endl;
+   
 }
-
 
 int main()
 {

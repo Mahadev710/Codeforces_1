@@ -7,7 +7,7 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-
+const int INF = 1e9;
 #define fastio()                 \
     ios::sync_with_stdio(false); \
     cin.tie(nullptr)
@@ -33,27 +33,48 @@ ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
 bool isPowerofTwo(ll n){
     return (n>0) && ((n&(n-1))==0);
 }
+ll n;
+map<string,ll> mpp;
 
-void solve() {
-   ll len,val;
-   cin>>len>>val;
-   vector<ll> ans(len,val);
-   ll or_val=0;
-   bool flag=true;
-   for(ll i=0;i<len-1;i++){
-    if(((or_val | i)& val)==(or_val | i)){
-        or_val|=i;
-        ans[i]=i;
-    }else{
-        flag=false;
-        break;
+void read() {
+  cin>>n;
+  for(ll i=0;i<n;i++){
+    ll c;
+    cin>>c;
+    string s;
+    cin>>s;
+    sort(s.begin(),s.end());
+    if(mpp.count(s)==0){
+        mpp[s]=c;
     }
-   }
-   if(flag && (or_val | (len-1)) ==val){
-    ans[len-1] =len-1;
-   }
-   for(auto it:ans) cout<<it<<" ";
-   cout<<endl;
+    else mpp[s]= min(mpp[s],c);
+  }
+}
+ll getC(string a,string b){
+    if(!mpp.count(a) || !mpp.count(b)) return INF;
+    return mpp[a]+mpp[b];
+}
+
+void solve(){
+    ll ans=INF;
+    if(mpp.count("A") && mpp.count("B") && mpp.count("C")){
+        ans=mpp["A"]+mpp["B"]+mpp["C"];
+    }
+
+    if(mpp.count("ABC")){
+        ans=min(ans,mpp["ABC"]);
+    }
+    ans=min(ans,getC("AB","C"));
+    ans=min(ans,getC("A","BC"));
+    ans=min(ans,getC("AC","B"));
+    ans=min(ans,getC("AB","BC"));
+    ans=min(ans,getC("AB","AC"));
+    ans=min(ans,getC("AC","BC"));
+    if(ans==INF) {
+        ans=-1;
+    }
+    cout<<ans<<endl;
+
 }
 
 
@@ -61,9 +82,9 @@ int main()
 {
     fastio();
     int t = 1;
-    if (!(cin >> t))
-        return 0;
-    while (t--)
-        solve();
+ 
+    while (t--){
+        read();
+        solve();}
     return 0;
 }
