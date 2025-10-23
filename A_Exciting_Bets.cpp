@@ -35,21 +35,19 @@ bool isPowerofTwo(ll n){
 }
 
 void solve() {
-   ll n,x;
-   cin>>n>>x;
-   vector<ll> arr(n);
-   range(i,0,n) cin>>arr[i];
-   ll sum=0;
-   ll maxi=0;
-   range(i,0,n){
-    
-     sum+=arr[i];
-     maxi+=(arr[i]+x-1)/x;
-    
+   ll x,y;
+   cin>>x>>y;
+   if(x==y){
+    cout<<0<<" "<<0<<endl;
+    return ;
    }
-   ll mini=(sum+x-1)/x;
-   cout<<mini<<" "<<maxi<<endl;
-}
+   ll diff=abs(x-y);
+   ll mini = min(x,y);
+   ll exc=min(x % diff , diff-x%diff);
+   cout<<diff<<" "<<exc<<endl;
+
+
+   }
 
 int main()
 {
