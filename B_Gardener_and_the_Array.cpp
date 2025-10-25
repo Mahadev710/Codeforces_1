@@ -35,39 +35,39 @@ bool isPowerofTwo(ll n){
 }
 
 void solve() {
-   ll n,k;
-   cin>>n>>k;
-   ll d=n;
-   map<ll,ll> mpp;
-   vector<ll> pref(n+1,0);
+   ll n;
+   cin>>n;
+   vector<vector<ll>> arr(n);
+   unordered_map<ll,ll> freq;
    for(ll i=0;i<n;i++){
-    ll x;
-    cin>>x;
-    mpp[x]++;
+    ll l;
+    cin>>l;
+    arr[i].resize(l);
+    for(ll j=0;j<l;j++){
+        cin>>arr[i][j];
+    }
+    sort(arr[i].begin(),arr[i].end());
+    arr[i].erase(unique(arr[i].begin(), arr[i].end()), arr[i].end());  
+    
+    for(ll x:arr[i]){
+        freq[x]++;
+    }
    }
-   for(ll i=1;i<=n;i++){
-    pref[i]=pref[i-1]+mpp[i];
-   }
-   while(d>0){
-     ll cnt=0;
-     if(4*d>n){
-        cnt=n;
-        for(ll m=1;m*d<=n;m++){
-            cnt-=mpp[m*d];
+   for(ll i=0;i<n;i++){
+    bool flag=true;
+     for(ll x:arr[i]){
+        if(freq[x]==1){
+            flag=false;
+            break;
         }
      }
-     else{
-        cnt=pref[4*d-1];
-        cnt-=mpp[d];
-        cnt-=mpp[2*d];
-        cnt-=mpp[3*d];
-     }
-     if(cnt<=k) {
-        cout<<d<<endl;
+     if(flag){
+        cout<<"Yes"<<endl;
         return;
      }
-     d--;
    }
+   cout<<"No"<<endl;
+
 }
 
 int main()

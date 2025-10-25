@@ -33,41 +33,29 @@ ll lcmll(ll a, ll b) { return a / gcdll(a, b) * b; }
 bool isPowerofTwo(ll n){
     return (n>0) && ((n&(n-1))==0);
 }
+ll mod=1e9+7;
+
 
 void solve() {
-   ll n,k;
-   cin>>n>>k;
-   ll d=n;
-   map<ll,ll> mpp;
-   vector<ll> pref(n+1,0);
-   for(ll i=0;i<n;i++){
-    ll x;
-    cin>>x;
-    mpp[x]++;
-   }
-   for(ll i=1;i<=n;i++){
-    pref[i]=pref[i-1]+mpp[i];
-   }
-   while(d>0){
-     ll cnt=0;
-     if(4*d>n){
-        cnt=n;
-        for(ll m=1;m*d<=n;m++){
-            cnt-=mpp[m*d];
-        }
-     }
-     else{
-        cnt=pref[4*d-1];
-        cnt-=mpp[d];
-        cnt-=mpp[2*d];
-        cnt-=mpp[3*d];
-     }
-     if(cnt<=k) {
-        cout<<d<<endl;
+   ll n;
+   cin>>n;
+   vector<ll> arr(n);
+   range(i,0,n) cin>>arr[i];
+   ll mini=*min_element(arr.begin(),arr.end());
+   ll cnt=0;
+   
+   for(auto x:arr){
+    if(mini==x) cnt++;
+    if((mini&x)!=mini) {
+        cout<<0<<endl;
         return;
-     }
-     d--;
+    }
    }
+   ll fact=1;
+   for(ll i=1;i<=n-2;i++) fact=(1LL*fact*i) %mod;
+   ll ans=(1LL *cnt*(cnt-1))%mod;
+   ans=(1LL *ans *fact)%mod;
+   cout<<ans<<endl;
 }
 
 int main()

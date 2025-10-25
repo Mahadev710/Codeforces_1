@@ -38,23 +38,46 @@ ll f(ll x, ll y){
     return x & ~y;
 }
 
-void solve() {
-   ll n;
-   cin>>n;
-   vector<ll> arr(n),ans(n,0);
+// void solve() {
+//    ll n;
+//    cin>>n;
+//    vector<ll> arr(n),ans(n,0);
+//    for(ll i=0;i<n;i++){
+//     cin>>arr[i];
+//    }
+//    for(ll i=1;i<n;i++){
+//     ans[i]=f(ans[i-1]^arr[i-1],arr[i]);
+//    }
+//    for(ll i=0;i<n;i++){
+//     cout<<ans[i]<<" ";
+//    }
+//    cout<<endl;
+                      
+// }
+
+//Second approach 
+
+void solve(){
+    ll n;
+    cin>>n;
+   vector<ll> x(n);
    for(ll i=0;i<n;i++){
-    cin>>arr[i];
-   }
+    cin>>x[i];
+   } 
+   ll y0=0;
+   cout<<y0<<" ";
+
+   ll z_prev=x[0]^y0;
+
    for(ll i=1;i<n;i++){
-    ans[i]=f(ans[i-1]^arr[i-1],arr[i]);
-   }
-   for(ll i=0;i<n;i++){
-    cout<<ans[i]<<" ";
+    ll yi =(z_prev|x[i]) ^x[i];
+    z_prev=x[i]^yi;
+
+    cout<<yi<<" ";
    }
    cout<<endl;
-                      
-}
 
+}
 int main()
 {
     fastio();
