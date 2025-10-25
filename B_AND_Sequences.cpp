@@ -8,6 +8,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 #define fastio()                 \
     ios::sync_with_stdio(false); \
     cin.tie(nullptr)
@@ -34,34 +35,69 @@ bool isPowerofTwo(ll n){
     return (n>0) && ((n&(n-1))==0);
 }
 ll mod=1e9+7;
+using ll = long long;
+const int N=2e5+5;
+
+ll fact[N];
+void factorials(){
+    fact[0]=1;
+    for(ll i=1;i<N;i++){
+        fact[i]=(fact[i-1]*i)%mod;
+    }
+}
 
 
-void solve() {
-   ll n;
-   cin>>n;
-   vector<ll> arr(n);
-   range(i,0,n) cin>>arr[i];
-   ll mini=*min_element(arr.begin(),arr.end());
-   ll cnt=0;
+
+// void solve() {
+//    ll n;
+//    cin>>n;
+//    vector<ll> arr(n);
+//    range(i,0,n) cin>>arr[i];
+//    ll mini=*min_element(arr.begin(),arr.end());
+//    ll cnt=0;
    
-   for(auto x:arr){
-    if(mini==x) cnt++;
-    if((mini&x)!=mini) {
+//    for(auto x:arr){
+//     if(mini==x) cnt++;
+//     if((mini&x)!=mini) {
+//         cout<<0<<endl;
+//         return;
+//     }
+//    }
+//    ll fact=1;
+//    for(ll i=1;i<=n-2;i++) fact=(1LL*fact*i) %mod;
+//    ll ans=(1LL *cnt*(cnt-1))%mod;
+//    ans=(1LL *ans *fact)%mod;
+//    cout<<ans<<endl;
+// }
+
+void solve(){
+    ll n;
+    cin>>n;
+    vector<ll> arr(n);
+    ll total_and=-1;
+
+    for(ll i=0;i<n;i++){
+        cin>>arr[i];
+        total_and &= arr[i];
+    }
+    ll k=0;
+    for(ll x:arr)
+        if(x==total_and) k++;
+    
+    if(k<2) {
         cout<<0<<endl;
         return;
-    }
-   }
-   ll fact=1;
-   for(ll i=1;i<=n-2;i++) fact=(1LL*fact*i) %mod;
-   ll ans=(1LL *cnt*(cnt-1))%mod;
-   ans=(1LL *ans *fact)%mod;
-   cout<<ans<<endl;
+    }    
+    ll ans=(k*(k-1))%mod;
+    ans=(ans*fact[n-2])%mod;
+    cout<<ans<<endl;
 }
 
 int main()
 {
     fastio();
     int t = 1;
+    factorials();
     if (!(cin >> t))
         return 0;
     while (t--)
